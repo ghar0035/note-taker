@@ -1,13 +1,96 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import {
+  createBrowserRouter,
+  Navigate,
+  Outlet,
+  RouterProvider,
+} from "react-router-dom";
+import App from "./App";
+import ChangePassword from "./components/ChangePassword";
+import Dashboard from "./components/Dashboard";
+import Login from "./components/Login";
+import NotesPage from "./components/NotesPage";
+import NotFound from "./components/NotFound";
+import Register from "./components/Register";
+import Setting from "./components/Setting";
+import ToDoPage from "./components/ToDoPage";
+import "./index.css";
+import reportWebVitals from "./reportWebVitals";
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const user = "";
+
+const ProtectedRoute = ({ user, redirectPath = "/auth", children }) => {
+  if (!user) {
+    return <Navigate to={redirectPath} replace />;
+  }
+
+  return children;
+};
+
+const ProtectedAuthRoute = ({ user, redirectPath = "/dashboard", children }) => {
+  if (user) {
+    return <Navigate to={redirectPath} replace />;
+  }
+
+  return children;
+};
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <App />,
+  },
+  {
+    path: "auth",
+    element: <ProtectedAuthRoute user={user}><Outlet /></ProtectedAuthRoute>,
+    children: [
+      {
+        index: true,
+        element: <Login />,
+      },
+      {
+        path: "register",
+        element: <Register />,
+      },
+      {
+        path: "reset-password",
+        element: <ChangePassword />,
+      },
+    ],
+  },
+  {
+    path: "/dashboard",
+    element: (
+      <ProtectedRoute user={user}>
+        <Dashboard />
+      </ProtectedRoute>
+    ),
+    children: [
+      {
+        index: true,
+        element: <NotesPage />,
+      },
+      {
+        path: "todo",
+        element: <ToDoPage />,
+      },
+      {
+        path: "setting",
+        element: <Setting />,
+      },
+    ],
+  },
+  {
+    path: "*",
+    element: <NotFound user={user} />,
+  },
+]);
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <App />
+    <RouterProvider router={router} />
   </React.StrictMode>
 );
 

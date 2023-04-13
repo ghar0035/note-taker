@@ -9,14 +9,15 @@ html {
 }
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: 'Open Sans', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   height: 100%;
 }
-
+h1 {
+  font-size: 3.5rem;
+  font-weight: 600;
+}
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
@@ -28,4 +29,70 @@ ul {
 
 li {
   list-style: none;
+}
+
+.btn {
+ background-color: #006aff;
+ color: #fff;
+ padding: 0.7rem 2rem;
+ border: none;
+ border-radius: 0.2rem;
+ font-family: 'Open Sans';
+ font-size: 1rem;
+ font-weight: 600;
+ cursor: pointer;
+ max-height: 3rem;
+ white-space: nowrap;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.form-control {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+}
+
+.form-control input {
+  height: 35px;
+  border: 2px solid #333;
+  border-radius: 0.2rem;
+  min-width: 20rem;
+  padding: 0.2rem 0.5rem;
+  font-size: 1rem;
+  font-family: 'Open Sans';
+}
+
+.form-control textarea {
+  border: 2px solid #333;
+  border-radius: 0.2rem;
+  min-width: 20rem;
+  padding: 0.2rem 0.5rem;
+  font-size: 1rem;
+  font-family: 'Open Sans';
+  min-height: 200px;
+}
+
+.form-control label {
+  display: inline-block;
+  margin-bottom: 0.2rem;
+  font-weight: 600;
+}
+
+.error {
+  color: red;
+}
+
+.btn-group {
+  display: flex;
+  gap: 1rem;
+  width: 100%;
+}
+
+.btn-group button:first-child {
+  background-color: #fff;
+  color:#006aff;
 }

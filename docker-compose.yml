@@ -1,0 +1,27 @@
+version: "3"
+services:
+  db:
+    image: mysql:latest
+    environment:
+      MYSQL_DATABASE: db_note
+      MYSQL_ROOT_PASSWORD: 123456
+    ports:
+      - "3306:3306"
+  web:
+    build: ./server
+    image: myserver
+    ports:
+      - "8001:8001"
+    volumes:
+      - ./server:/code
+    depends_on:
+      - db
+  client:
+    image: node:12-alpine
+    build: .
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+    depends_on:
+      - web

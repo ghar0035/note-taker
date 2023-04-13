@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders note page 1`] = `
+<div
+  className="sc-gswNZR kVgipI"
+>
+  <img
+    alt="no note found"
+    src="no_notes.png"
+    width="400"
+  />
+  <p>
+    No notes is added
+  </p>
+  <button
+    className="btn"
+    onClick={[Function]}
+  >
+    Add Note
+  </button>
+</div>
+`;

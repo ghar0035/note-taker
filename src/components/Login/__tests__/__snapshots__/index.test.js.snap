@@ -1,0 +1,89 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders Login 1`] = `
+Array [
+  <div
+    className="sc-bcXHqe evUqyv"
+  >
+    <a
+      href="/"
+      onClick={[Function]}
+    >
+      <img
+        alt="logo"
+        className="logo"
+        src="logo.png"
+      />
+    </a>
+    <div>
+      <a
+        className="lnkBtn"
+        href="/auth/register"
+        onClick={[Function]}
+      >
+        register
+      </a>
+      <a
+        className="lnkBtn primary"
+        href="/auth"
+        onClick={[Function]}
+      >
+        login
+      </a>
+    </div>
+  </div>,
+  <div
+    className="container"
+  >
+    <div
+      className="sc-gswNZR kNyIcL"
+    >
+      <form
+        onSubmit={[Function]}
+      >
+        <div
+          className="form-control"
+        >
+          <label
+            htmlFor="name"
+          >
+            Email
+          </label>
+          <input
+            id="email"
+            name="email"
+            onChange={[Function]}
+            type="email"
+            value=""
+          />
+        </div>
+        <div
+          className="form-control"
+        >
+          <label
+            htmlFor="password"
+          >
+            Password
+          </label>
+          <input
+            id="password"
+            name="password"
+            onChange={[Function]}
+            type="password"
+            value=""
+          />
+        </div>
+        <button
+          className="btn"
+          type="submit"
+        >
+          Login
+        </button>
+        <p
+          className="error"
+        />
+      </form>
+    </div>
+  </div>,
+]
+`;

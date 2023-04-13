@@ -1,0 +1,47 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders Setting 1`] = `
+<div
+  className="sc-bcXHqe grRzCf"
+>
+  <form
+    onSubmit={[Function]}
+  >
+    <h4>
+      Setting
+    </h4>
+    <div
+      className="form-control"
+    >
+      <label
+        htmlFor="name"
+      >
+        Name
+      </label>
+      <input
+        id="name"
+        name="name"
+        onChange={[Function]}
+        type="text"
+      />
+    </div>
+    <p>
+      <strong>
+        Email:
+      </strong>
+       
+    </p>
+    <button
+      className="btn"
+      type="submit"
+    >
+      Save
+    </button>
+  </form>
+  <img
+    alt=""
+    src="setting.png"
+    width="400"
+  />
+</div>
+`;

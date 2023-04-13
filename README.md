@@ -29,3 +29,11 @@ e.g ``` python3.10 app.py ```
 ## Run mysql
 
 ``` mysql.server start ```
+
+
+## docker compose run
+
+```docker-compose up --build```
+
+## run test
+```npm test``` 

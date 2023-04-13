@@ -18,9 +18,8 @@ import ToDoPage from "./components/ToDoPage";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
 
-const user = "";
-
-const ProtectedRoute = ({ user, redirectPath = "/auth", children }) => {
+const ProtectedRoute = ({ redirectPath = "/auth", children }) => {
+  const user = window.localStorage.getItem("user");
   if (!user) {
     return <Navigate to={redirectPath} replace />;
   }
@@ -28,7 +27,8 @@ const ProtectedRoute = ({ user, redirectPath = "/auth", children }) => {
   return children;
 };
 
-const ProtectedAuthRoute = ({ user, redirectPath = "/dashboard", children }) => {
+const ProtectedAuthRoute = ({ redirectPath = "/dashboard", children }) => {
+  const user = window.localStorage.getItem("user");
   if (user) {
     return <Navigate to={redirectPath} replace />;
   }
@@ -43,7 +43,11 @@ const router = createBrowserRouter([
   },
   {
     path: "auth",
-    element: <ProtectedAuthRoute user={user}><Outlet /></ProtectedAuthRoute>,
+    element: (
+      <ProtectedAuthRoute>
+        <Outlet />
+      </ProtectedAuthRoute>
+    ),
     children: [
       {
         index: true,
@@ -62,7 +66,7 @@ const router = createBrowserRouter([
   {
     path: "/dashboard",
     element: (
-      <ProtectedRoute user={user}>
+      <ProtectedRoute>
         <Dashboard />
       </ProtectedRoute>
     ),
@@ -83,7 +87,7 @@ const router = createBrowserRouter([
   },
   {
     path: "*",
-    element: <NotFound user={user} />,
+    element: <NotFound />,
   },
 ]);
 

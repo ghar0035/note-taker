@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders NotFound 1`] = `
+<div
+  className="sc-gswNZR kNyIcL container"
+>
+  <img
+    alt="not found"
+    src="404.png"
+    width={600}
+  />
+  <div>
+    <a
+      href="/"
+      onClick={[Function]}
+    >
+      Take me to  
+      home
+    </a>
+  </div>
+</div>
+`;

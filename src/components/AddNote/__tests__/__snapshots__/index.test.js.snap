@@ -1,0 +1,62 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders AddNote 1`] = `
+<form
+  onSubmit={[Function]}
+>
+  <div
+    className="sc-bcXHqe gNwiIb"
+  >
+    <div
+      className="form-control"
+    >
+      <label
+        htmlFor="title"
+      >
+        Tile
+      </label>
+      <input
+        id="title"
+        name="title"
+        onChange={[Function]}
+        required={true}
+        type="text"
+        value=""
+      />
+    </div>
+    <div
+      className="form-control"
+    >
+      <label
+        htmlFor="content"
+      >
+        Content
+      </label>
+      <textarea
+        id="content"
+        name="content"
+        onChange={[Function]}
+        required={true}
+        value=""
+      />
+    </div>
+    <div
+      className="btn-group"
+    >
+      <button
+        className="btn secondary"
+        onClick={[Function]}
+        type="button"
+      >
+        Cancel
+      </button>
+      <button
+        className="btn"
+        type="submit"
+      >
+        Save note
+      </button>
+    </div>
+  </div>
+</form>
+`;

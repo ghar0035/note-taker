@@ -1,8 +1,14 @@
-import { render, screen } from '@testing-library/react';
-import App from './App';
+import renderer from "react-test-renderer";
+import App from "./App";
+import { MemoryRouter as Router } from "react-router-dom";
 
-test('renders learn react link', () => {
-  render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+test("renders App", () => {
+  const tree = renderer
+    .create(
+      <Router>
+        <App />
+      </Router>
+    )
+    .toJSON();
+  expect(tree).toMatchSnapshot();
 });

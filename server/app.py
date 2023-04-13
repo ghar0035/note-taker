@@ -6,20 +6,54 @@ from flask_migrate import Migrate
 from flask_restful import Resource
 import bcrypt
 from functools import wraps
+from flask_cors import CORS
 
+HTTP_METHODS = ['GET', 'HEAD', 'POST', 'PUT', 'DELETE', 'CONNECT', 'OPTIONS', 'TRACE', 'PATCH']
 
 app = Flask(__name__)
+CORS(app, origins=["http://localhost:3000"], methods=HTTP_METHODS, allow_headers=["Content-Type"], supports_credentials=True)
 app.secret_key = 'my_secret_key'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:123456@127.0.0.1:3306/db_note'
+app.config["SESSION_COOKIE_SAMESITE"] = "None"
+app.config["SESSION_COOKIE_SECURE"] = True
+
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 api = Api(app)
 
+def check_password(plain_password, hashed_password):
+    plain_password = plain_password.encode('utf-8')
+    hashed_password = hashed_password.encode('utf-8')
+    return bcrypt.checkpw(plain_password, hashed_password) 
+
+@app.route('/login', methods=['POST'])
+def login():
+    email = request.json.get('email')
+    password = request.json.get('password')
+
+    user = User.query.filter_by(email=email).first()
+    
+    # check if the user exists and the password is correct
+    if user and check_password(password, user.password):
+        session.permanent = True
+        session['user_id'] = user.id
+        
+        return {
+            'message': 'user logged in successfully',
+            'id': user.id,
+            'name': user.name
+        }, 200
+    else:
+        return 'Login failed', 401
+
+
+
+
 def authenticate(f):
     @wraps(f)
     def wrapper(*args, **kwds):
-        if 'user_id' not in session:
-            return {'message': 'Unauthorized access'}, 401
+        #if 'user_id' not in session:
+            #return {'message': 'Unauthorized access'}, 401
         return f(*args, **kwds)
     return wrapper
 
@@ -43,7 +77,6 @@ class Note(db.Model):
 
 ## APIs
 class NoteResource(Resource):
-    @authenticate
     def post(self):
         data = request.get_json()
 
@@ -63,7 +96,6 @@ class NoteResource(Resource):
 
         return {'message': 'Note created successfully'}, 201
 
-    @authenticate
     def get(self, note_id=None):
         if note_id:
             note = Note.query.get(note_id)
@@ -75,7 +107,6 @@ class NoteResource(Resource):
             notes = Note.query.all()
             return {'notes': [{'id': note.id, 'title': note.title, 'content': note.content, 'due_date': str(note.due_date), 'user_id': note.user_id} for note in notes]}
 
-    @authenticate
     def put(self, note_id):
         note = Note.query.get(note_id)
         if note:
@@ -90,7 +121,7 @@ class NoteResource(Resource):
             return {'note': {'id': note.id, 'title': note.title, 'content': note.content, 'due_date': str(note.due_date), 'user_id': note.user_id}}
         else:
             return {'error': 'Note not found'}, 404
-    @authenticate
+            
     def delete(self, note_id):
         note = Note.query.get(note_id)
         if note:
@@ -118,7 +149,7 @@ class UserResource(Resource):
         email = request.json.get('email')
         password = request.json.get('password')
 
-        existing_user = User.query.filter_by(email=email).first()
+        existing_user = User.query.filter_by(email=email).first() is not None
         if existing_user:
             return {'error': 'A user with the same email already exists'}, 400
 
@@ -156,29 +187,8 @@ def index():
     return "App is working!"
 
 
-def check_password(plain_password, hashed_password):
-    plain_password = plain_password.encode('utf-8')
-    hashed_password = hashed_password.encode('utf-8')
-    return bcrypt.checkpw(plain_password, hashed_password) 
 
-@app.route('/login', methods=['POST'])
-def login():
-    email = request.json.get('email')
-    password = request.json.get('password')
-
-    user = User.query.filter_by(email=email).first()
-
-    # check if the user exists and the password is correct
-    if user and check_password(password, user.password):
-        session.permanent = True
-        session['user_id'] = user.id
-        return {
-            'message': 'user logged in successfully'
-        }, 200
-    else:
-        return 'Login failed', 401
-
-@app.route('/logout', methods=['GET'])
+@app.route('/logout', methods=HTTP_METHODS)
 def logout():
     id = session.pop('user_id', None)
     return 'User logged out ' + str(id) , 200

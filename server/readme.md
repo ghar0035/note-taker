@@ -1,5 +1,5 @@
 # run server
-``` python3.10 app.py ```
+``` python3.11 app.py || python app.py```
 # install packages
 ``` pip3 install -r requirements.txt ```
 # update requirement.txt
@@ -12,3 +12,6 @@ mysql -uroot -p
 ``` flask db init ``` only for first time
 ``` flask db migrate -m 'migration message' ```
 ``` flask db upgrade ```
+
+# build image
+ ``` docker build -t myserver . ```
